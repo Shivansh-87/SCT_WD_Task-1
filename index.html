@@ -1,0 +1,304 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Find Your Match - Dating Landing Page</title>
+<style>
+  /* CSS Variables */
+  :root {
+    --color-bg: #ffffff;s
+    --color-text: #6b7280;/* neutral gray for body text */
+    --color-primary: #111827; /* almost black for strong text */
+    --color-primary-hover: #000000;
+    --color-accent: #ef4444; /* soft red accent typical for dating theme */
+    --shadow-light: rgba(0, 0, 0, 0.05);
+    --shadow-hover: rgba(0, 0, 0, 0.1);
+    --border-radius: 12px;
+    --transition-duration: 0.3s;
+    --font-sans: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  /* Global Reset and base */
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  a:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  /* Container */
+  .container {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* Navigation */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: var(--color-bg);
+    box-shadow: 0 1px 6px var(--shadow-light);
+    z-index: 999;
+    transition: background-color var(--transition-duration), box-shadow var(--transition-duration);
+  }
+  nav.scrolled {
+    background-color: #fff1f1; /* very subtle pinkish background on scroll */
+    box-shadow: 0 3px 10px var(--shadow-hover);
+  }
+  nav .nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 64px;
+  }
+  nav .logo {
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: var(--color-primary);
+    user-select: none;
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+  }
+  nav ul li a {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--color-text);
+    padding: 6px 0;
+    position: relative;
+    transition:
+      color var(--transition-duration),
+      transform var(--transition-duration);
+  }
+  nav ul li a:hover,
+  nav ul li a:focus {
+    color: var(--color-accent);
+    transform: scale(1.05);
+  }
+  nav ul li a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background-color: var(--color-accent);
+    border-radius: 2px;
+    transition: width var(--transition-duration);
+  }
+  nav ul li a:hover::after,
+  nav ul li a:focus::after {
+    width: 100%;
+  }
+
+  /* Hero Section */
+  header.hero {
+    padding-top: 96px; /* offset for fixed nav */
+    padding-bottom: 80px;
+    text-align: center;
+    color: var(--color-primary);
+  }
+  header.hero h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin: 0 0 1rem 0;
+    line-height: 1.1;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  header.hero p {
+    font-size: 1.125rem;
+    color: var(--color-text);
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2.5rem;
+  }
+  header.hero button.cta {
+    background-color: var(--color-accent);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.125rem;
+    padding: 16px 36px;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    box-shadow: 0 8px 16px rgba(239, 68, 68, 0.3);
+    transition: background-color var(--transition-duration), transform var(--transition-duration);
+  }
+  header.hero button.cta:hover,
+  header.hero button.cta:focus {
+    background-color: #dc2626;
+    transform: scale(1.05);
+  }
+
+  /* Sections */
+  section {
+    padding-top: 4rem;
+    padding-bottom: 5rem;
+  }
+  section h2 {
+    color: var(--color-primary);
+    font-weight: 700;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  section p {
+    max-width: 600px;
+    color: var(--color-text);
+    line-height: 1.5;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
+  /* Cards - for features */
+  .cards {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+    gap: 2rem;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .card {
+    background: #fff0f0;
+    border-radius: var(--border-radius);
+    box-shadow: 0 6px 12px var(--shadow-light);
+    padding: 2rem;
+    color: var(--color-primary);
+    text-align: center;
+    transition: box-shadow var(--transition-duration), transform var(--transition-duration);
+    cursor: default;
+  }
+  .card:hover,
+  .card:focus-within {
+    box-shadow: 0 10px 20px var(--shadow-hover);
+    transform: translateY(-4px);
+  }
+  .card h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    font-size: 1.25rem;
+  }
+  .card p {
+    margin: 0;
+    color: var(--color-text);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    nav ul {
+      gap: 1.2rem;
+    }
+    header.hero h1 {
+      font-size: 2.25rem;
+    }
+    .cards {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+  <nav id="navbar" aria-label="Primary Navigation">
+    <div class="container nav-container">
+      <div class="logo" tabindex="0">Baddie.in</div>
+      <ul role="menubar">
+        <li role="none"><a href="#home" role="menuitem" tabindex="0">Home</a></li>
+        <li role="none"><a href="#matches" role="menuitem" tabindex="0">Matches</a></li>
+        <li role="none"><a href="#how-it-works" role="menuitem" tabindex="0">How It Works</a></li>
+        <li role="none"><a href="#about" role="menuitem" tabindex="0">About</a></li>
+        <li role="none"><a href="#contact" role="menuitem" tabindex="0">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="hero" role="banner" id="home">
+    <div class="container">
+      <h1>Find Your Perfect Library</h1>
+      <p>Join thousands of baddies finding love through connection and compatibility.</p>
+      <button class="cta" type="button">Get Started</button>
+    </div>
+  </header>
+
+  <main class="container" style="padding-bottom: 400px;">
+    <section id="matches">
+      <h2>Our Matches</h2>
+      <p>Browse profiles tailored to your preferences and interests.</p>
+      <div class="cards" aria-label="Top matches">
+        <article class="card" tabindex="0">
+          <h3>Shashikala, 29</h3>
+          <p>Book lover and coffee enthusiast looking for meaningful conversations.</p>
+        </article>
+        <article class="card" tabindex="0">
+          <h3>salman Khan, 32</h3>
+          <p>Adventurous driver and foodie seeking a partner in farmhouse.</p>
+        </article>
+        <article class="card" tabindex="0">
+          <h3>Sophia, 27</h3>
+          <p>Fitness fan and music lover who loves weekend hikes and concerts.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="how-it-works">
+      <h2>How It Works</h2>
+      <p>Sign up, create your profile, and get matched based on shared interests and personality.</p>
+    </section>
+
+    <section id="about">
+      <h2>About MatchMaker</h2>
+      <p>We believe everyone deserves a chance at love. Our mission is to create a trustworthy and enjoyable dating experience.</p>
+    </section>
+
+    <section id="contact">
+      <h2>Contact Us</h2>
+      <p>Have questions or feedback? Reach out, we’d love to hear from you.</p>
+    </section>
+  </main>
+
+  <script>
+    // Change navbar style on scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+  </script>
+</body>
+</html>
+
+```
